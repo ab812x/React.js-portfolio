@@ -8,6 +8,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const projects = [
   {
+    name: "React Portfolio",
+    description:
+      "An award-quality personal developer portfolio featuring a cinematic intro sequence, interactive 3D Spline hero, GSAP-powered scroll animations, a custom magnetic cursor, a filterable project grid, and a terminal-style contact panel — all wrapped in a dark violet design system.",
+    tags: ["React 19", "Tailwind CSS v4", "Framer Motion", "GSAP", "Spline", "EmailJS"],
+    category: "React",
+    github: "https://github.com/ab812x/React.js-portfolio",
+    live: null,
+    image: "/images/react-portfolio.png",
+    featured: true,
+  },
+  {
     name: "Jammming",
     description:
       "A Spotify-integrated playlist builder that uses OAuth 2.0 to search the Spotify library, retrieve track metadata, and lets users dynamically build and save custom playlists — all driven by React hooks.",
@@ -16,7 +27,7 @@ const projects = [
     github: "https://github.com/ab812x/jammming",
     live: "https://jammming-ab812x.netlify.app/",
     image: "/images/jamming.png",
-    featured: true,
+    featured: false,
   },
   {
     name: "Old Portfolio Website",
