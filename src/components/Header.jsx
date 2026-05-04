@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { FiGithub, FiInstagram, FiLinkedin, FiMenu, FiX } from "react-icons/fi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useScrollTo from "../hooks/useScrollTo";
 import ContactModal from "./ContactModal";
 
@@ -9,7 +9,6 @@ const SECTION_IDS = ["home", "about", "projects", "experience", "contact"];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen((prev) => !prev);
   const scrollTo = useScrollTo();
 
   const [contactFormOpen, setContactFormOpen] = useState(false);
@@ -50,6 +49,30 @@ const Header = () => {
     });
 
     return () => observers.forEach((obs) => obs.disconnect());
+  }, []);
+
+  // ── Mobile nav handler ──────────────────────────────────
+  // Close menu FIRST, then scroll after a short delay so the
+  // collapsing animation doesn't interfere with getBoundingClientRect
+  const handleMobileNav = useCallback(
+    (sectionId) => {
+      setIsOpen(false);
+      // Wait for the menu collapse to finish before scrolling
+      // so the target element's position is calculated correctly
+      setTimeout(() => {
+        scrollTo(sectionId);
+      }, 100);
+    },
+    [scrollTo],
+  );
+
+  // ── Mobile contact handler ──────────────────────────────
+  const handleMobileContact = useCallback(() => {
+    setIsOpen(false);
+    // Small delay so menu closes cleanly before modal opens
+    setTimeout(() => {
+      openContactForm();
+    }, 100);
   }, []);
 
   return (
@@ -110,6 +133,7 @@ const Header = () => {
                     : "text-gray-200 hover:text-violet-400"
                 }`}
                 role="button"
+                tabIndex={0}
                 onClick={() => scrollTo(sectionId)}
               >
                 {item}
@@ -181,7 +205,7 @@ const Header = () => {
         <div className="md:hidden flex items-center">
           <motion.button
             className="text-gray-300"
-            onClick={toggleMenu}
+            onClick={() => setIsOpen((prev) => !prev)}
             whileTap={{ scale: 0.7 }}
           >
             {isOpen ? (
@@ -195,35 +219,39 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: isOpen ? 1 : 0, height: isOpen ? "auto" : 0 }}
-        transition={{ duration: 0.5 }}
-        className="md:hidden overflow-hidden bg-gray-900 px-4 py-5 space-y-5"
+        initial={false}
+        animate={{
+          opacity: isOpen ? 1 : 0,
+          height: isOpen ? "auto" : 0,
+        }}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        style={{
+          overflow: "hidden",
+          pointerEvents: isOpen ? "auto" : "none",
+        }}
+        className="md:hidden bg-gray-900 px-4"
       >
-        <nav className="flex flex-col space-y-3">
+        <nav className="flex flex-col space-y-1 pt-4 pb-2">
           {NAV_ITEMS.map((item, index) => {
             const sectionId = SECTION_IDS[index];
             const isActive = activeSection === sectionId;
 
             return (
-              <a
-                role="button"
-                onClick={() => {
-                  scrollTo(sectionId);
-                  toggleMenu();
-                }}
+              <button
                 key={item}
-                className={`font-medium py-2 ${
+                type="button"
+                onClick={() => handleMobileNav(sectionId)}
+                className={`text-left font-medium py-3 px-2 rounded-lg active:bg-violet-500/10 transition-colors ${
                   isActive ? "text-violet-400" : "text-gray-300"
                 }`}
               >
                 {item}
-              </a>
+              </button>
             );
           })}
         </nav>
-        <div className="pt-4 border-t border-gray-700">
-          <div className="flex space-x-5">
+        <div className="pt-3 pb-5 border-t border-gray-700">
+          <div className="flex space-x-5 px-2">
             <a
               href="https://github.com/ab812x"
               className="h-5 w-5 text-gray-300"
@@ -247,11 +275,9 @@ const Header = () => {
             </a>
           </div>
           <button
-            onClick={() => {
-              toggleMenu();
-              openContactForm();
-            }}
-            className="mt-4 w-full block px-4 py-2 rounded-lg bg-linear-to-r from-violet-600 to-violet-400 font-bold"
+            type="button"
+            onClick={handleMobileContact}
+            className="mt-4 w-full block px-4 py-3 rounded-lg bg-linear-to-r from-violet-600 to-violet-400 font-bold active:opacity-80 transition-opacity"
           >
             Contact Me
           </button>
