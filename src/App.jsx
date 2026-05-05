@@ -42,15 +42,17 @@ function App() {
         <CustomCursor />
         <Header />
         <ProgressBar />
-        <HeroSection />
+        <HeroSection introComplete={introComplete} />
         <SectionDivider />
-        <AboutSection />
-        <SectionDivider flip />
-        <ProjectSection />
-        <SectionDivider />
-        <ExperienceSection />
-        <SectionDivider flip />
-        <ContactSection />
+        <main>
+          <AboutSection />
+          <SectionDivider flip />
+          <ProjectSection />
+          <SectionDivider />
+          <ExperienceSection />
+          <SectionDivider flip />
+          <ContactSection />
+        </main>
         <SectionDivider />
         <Footer />
       </motion.div>

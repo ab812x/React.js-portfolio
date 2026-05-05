@@ -1,12 +1,13 @@
 // npm install gsap @gsap/react
 import { motion } from "framer-motion";
-import Spline from "@splinetool/react-spline";
+import { lazy, Suspense, useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef, useState, useEffect } from "react";
 
-const HeroSection = () => {
+const Spline = lazy(() => import("@splinetool/react-spline"));
+
+const HeroSection = ({ introComplete }) => {
   const textRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -79,11 +80,25 @@ const HeroSection = () => {
 
       {/* Right section */}
       <div className="flex-1 flex items-center justify-center w-full xl:w-1/2 h-full min-h-[400px] relative">
-        <Spline
-          scene="https://prod.spline.design/Px1fdImyXiaIsixY/scene.splinecode"
-          className="w-full h-full"
-          style={{ width: "100%", height: "100%" }}
-        />
+        {introComplete ? (
+          <Suspense
+            fallback={
+              <div className="w-full h-full flex items-center justify-center text-violet-500/30 font-mono text-sm">
+                loading scene...
+              </div>
+            }
+          >
+            <Spline
+              scene="https://prod.spline.design/Px1fdImyXiaIsixY/scene.splinecode"
+              className="w-full h-full"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </Suspense>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="w-64 h-64 rounded-full bg-violet-900/20 blur-3xl animate-pulse" />
+          </div>
+        )}
       </div>
 
       {/* ── Scroll nudge ── */}

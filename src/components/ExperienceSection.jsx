@@ -176,9 +176,9 @@ const EducationCard = ({ entry }) => {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h4 className="font-heading text-white font-semibold">
+            <h3 className="font-heading text-white font-semibold">
               {entry.institution}
-            </h4>
+            </h3>
             <span className="text-gray-500 text-sm whitespace-nowrap">
               {entry.duration}
             </span>
@@ -241,9 +241,9 @@ const ExperienceCard = ({ entry }) => {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h4 className="font-heading text-white font-semibold">
+            <h3 className="font-heading text-white font-semibold">
               {entry.company}
-            </h4>
+            </h3>
             <span className="text-gray-500 text-sm whitespace-nowrap">
               {entry.duration}
             </span>

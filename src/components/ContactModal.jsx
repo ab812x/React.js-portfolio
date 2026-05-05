@@ -67,9 +67,10 @@ const ContactModal = ({ isOpen, onClose }) => {
           >
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-300">Get In Touch</h2>
+              <h3 className="text-2xl font-bold text-gray-300">Get In Touch</h3>
               <button
                 onClick={handleClose}
+                aria-label="Close contact form"
                 data-cursor="button"
                 className="text-gray-400 hover:text-white transition-colors"
               >

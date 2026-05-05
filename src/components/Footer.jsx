@@ -123,12 +123,13 @@ const Footer = () => {
   };
 
   const socials = [
-    { href: "https://github.com/ab812x", icon: FiGithub },
+    { href: "https://github.com/ab812x", icon: FiGithub, label: "GitHub profile" },
     {
       href: "https://www.linkedin.com/in/eng-abdullah-alaa-/",
       icon: FiLinkedin,
+      label: "LinkedIn profile",
     },
-    { href: "https://www.instagram.com/ab812x/", icon: FiInstagram },
+    { href: "https://www.instagram.com/ab812x/", icon: FiInstagram, label: "Instagram profile" },
   ];
 
   const techBadges = [
@@ -161,6 +162,7 @@ const Footer = () => {
           {/* Scroll to top */}
           <motion.button
             onClick={scrollToTop}
+            aria-label="Scroll to top"
             data-cursor="button"
             data-magnetic
             whileHover={{ scale: 1.1 }}
@@ -187,12 +189,13 @@ const Footer = () => {
 
           {/* Social icons */}
           <div className="flex gap-5">
-            {socials.map(({ href, icon: Icon }) => (
+            {socials.map(({ href, icon: Icon, label }) => (
               <motion.a
                 key={href}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={label}
                 data-cursor="social"
                 data-magnetic
                 whileHover={{ scale: 1.15 }}
@@ -233,6 +236,7 @@ const Footer = () => {
             </AnimatePresence>
             <button
               onClick={() => setTerminalOpen((prev) => !prev)}
+              aria-label="Open easter egg terminal"
               className="text-gray-700 text-xs font-mono hover:text-gray-500 transition-colors cursor-pointer"
             >
               press F or type &apos;help&apos;

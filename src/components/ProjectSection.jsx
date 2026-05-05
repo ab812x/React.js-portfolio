@@ -158,6 +158,10 @@ const FeaturedCard = ({ project }) => (
           src={project.image}
           alt={project.name}
           className="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="600"
         />
       ) : (
         <ImagePlaceholder name={project.name} />
@@ -180,6 +184,10 @@ const ProjectCard = ({ project }) => (
           src={project.image}
           alt={project.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="600"
         />
       ) : (
         <ImagePlaceholder name={project.name} />

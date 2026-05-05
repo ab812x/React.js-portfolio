@@ -158,16 +158,19 @@ const Header = () => {
             {
               href: "https://github.com/ab812x",
               icon: <FiGithub className="w-5 h-5" />,
+              label: "GitHub profile",
             },
             {
               href: "https://www.linkedin.com/in/eng-abdullah-alaa-/",
               icon: <FiLinkedin className="w-5 h-5" />,
+              label: "LinkedIn profile",
             },
             {
               href: "https://www.instagram.com/ab812x/",
               icon: <FiInstagram className="w-5 h-5" />,
+              label: "Instagram profile",
             },
-          ].map(({ href, icon }) => (
+          ].map(({ href, icon, label }) => (
             <motion.a
               key={href}
               initial={{ opacity: 0, scale: 0.5 }}
@@ -175,6 +178,7 @@ const Header = () => {
               transition={{ delay: 1.3, duration: 0.8 }}
               href={href}
               target="_blank"
+              aria-label={label}
               data-cursor="social"
               data-magnetic
               className="text-gray-300 hover:text-violet-400 transition-colors duration-300"
@@ -205,6 +209,7 @@ const Header = () => {
         <div className="md:hidden flex items-center">
           <motion.button
             className="text-gray-300"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
             onClick={() => setIsOpen((prev) => !prev)}
             whileTap={{ scale: 0.7 }}
           >
@@ -256,6 +261,7 @@ const Header = () => {
               href="https://github.com/ab812x"
               className="h-5 w-5 text-gray-300"
               target="_blank"
+              aria-label="GitHub profile"
             >
               <FiGithub />
             </a>
@@ -263,6 +269,7 @@ const Header = () => {
               href="https://www.linkedin.com/in/eng-abdullah-alaa-/"
               className="h-5 w-5 text-gray-300"
               target="_blank"
+              aria-label="LinkedIn profile"
             >
               <FiLinkedin />
             </a>
@@ -270,6 +277,7 @@ const Header = () => {
               href="https://www.instagram.com/ab812x/"
               className="h-5 w-5 text-gray-300"
               target="_blank"
+              aria-label="Instagram profile"
             >
               <FiInstagram />
             </a>
