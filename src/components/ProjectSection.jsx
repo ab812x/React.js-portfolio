@@ -246,6 +246,7 @@ const ProjectSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const gridRef = useRef(null);
   const headingRef = useRef(null);
+  const hasInitialRevealRef = useRef(false);
 
   const featured = projects.find((p) => p.featured);
   const regular = projects.filter((p) => !p.featured);
@@ -259,34 +260,61 @@ const ProjectSection = () => {
   const showFeatured =
     activeFilter === "All" || featured?.category === activeFilter;
 
-  // GSAP stagger cards on scroll
+  // GSAP stagger cards — ScrollTrigger on first load, immediate on filter change
   useGSAP(() => {
     if (!gridRef.current) return;
 
-    const cards = gridRef.current.querySelectorAll(".project-card");
+    // Kill stale ScrollTrigger instances and tweens on the grid
+    ScrollTrigger.getAll()
+      .filter((st) => st.trigger === gridRef.current)
+      .forEach((st) => st.kill());
+    gsap.killTweensOf(gridRef.current.querySelectorAll(".project-card"));
 
-    gsap.fromTo(
-      cards,
-      { opacity: 0, y: 60 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: "power2.out",
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-  }, [activeFilter]);
+    // Defer to next frame so React has painted the new filtered cards
+    const frameId = requestAnimationFrame(() => {
+      if (!gridRef.current) return;
 
-  // Refresh ScrollTrigger when filter changes
-  useGSAP(() => {
-    ScrollTrigger.refresh();
-  }, [activeFilter]);
+      const cards = gridRef.current.querySelectorAll(".project-card");
+      if (!cards.length) return;
+
+      // Reset cards to invisible
+      gsap.set(cards, { opacity: 0, y: 60 });
+
+      if (!hasInitialRevealRef.current) {
+        // First load — use ScrollTrigger for scroll-reveal
+        hasInitialRevealRef.current = true;
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          stagger: 0.12,
+          overwrite: true,
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        });
+      } else {
+        // Filter change — user is already at the section,
+        // always animate immediately (no ScrollTrigger)
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.1,
+          overwrite: true,
+        });
+      }
+    });
+
+    // Cleanup: cancel pending frame if dependencies change before it fires
+    return () => cancelAnimationFrame(frameId);
+  }, { dependencies: [activeFilter] });
+
+
 
   // Heading fade+scale on scroll entry
   useGSAP(() => {
