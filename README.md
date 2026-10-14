@@ -1,6 +1,6 @@
 # Abdullah Portfolio
 
-A modern, award-quality personal developer portfolio built with React. Features cinematic intro animations, GSAP-powered scroll effects, a 3D Spline hero scene, a GSAP custom cursor with magnetic pull, and a dark violet design system throughout.
+A modern, award-quality personal developer portfolio built with React. Features cinematic intro animations, GSAP-powered scroll effects, a 3D Spline hero scene, a GSAP custom cursor with magnetic p[...]
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
@@ -12,7 +12,7 @@ A modern, award-quality personal developer portfolio built with React. Features 
 
 ## Live Demo
 
-> **[View Live →](ab812x-portfolio.vercel.app)**
+> **[View Live →](https://ab812x-portfolio.vercel.app)**
 
 ---
 
