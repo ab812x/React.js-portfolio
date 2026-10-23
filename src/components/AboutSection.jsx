@@ -339,8 +339,8 @@ const AboutSection = () => {
           {/* CTA Buttons */}
           <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
             <a
-              href="../../public/Abdullah_Alaa_Resume.pdf"
-              download
+              href="/Abdullah_Alaa_Resume.pdf"
+              download="Abdullah_Alaa_Resume.pdf"
               data-cursor="button"
               data-magnetic
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white bg-linear-to-r from-violet-600 to-purple-400 hover:from-violet-500 hover:to-purple-300 transition-all duration-300 shadow-lg shadow-violet-700/25"
